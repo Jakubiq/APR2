@@ -284,6 +284,20 @@ class DataFrame:
         """
         return JSONReader(path).read()
 
+    def drop(self, label:list, axis=0):
+        data = [line for line in self]
+        unwanted_items = []
+        print(data)
+        if axis == 0:
+            for i in range(len(label)):
+                if i < label[i]:
+                    unwanted_items.append(data[i])
+            
+        done_df = [item for item in data if item not in unwanted_items]
+        print(done_df)
+
+            
+        
 
 class Reader(ABC):
     def __init__(self, path: Union[Path, str]):
@@ -325,17 +339,13 @@ class CSVReader(Reader):
 
 if __name__ == "__main__":
     df = DataFrame(dict(
-        a=Column([None, 3.1415], Type.Float),
-        b=Column(["a", 2], Type.String),
-        c=Column(range(2), Type.Float)
+        a=Column([0, 4, 8], Type.Float),
+        b=Column([1, 5, 9], Type.Float),
+        c=Column([2, 6, 10], Type.Float),
+        d=Column([3, 7, 11], Type.Float),
         ))
-    df.setvalue("a", 1, 42)
     print(df)
 
-    df = DataFrame.read_json("data.json")
-    print(df)
 
-for line in df:
-    print(line)
+df.drop([1,2])
 
-###
