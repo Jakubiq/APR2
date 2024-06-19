@@ -1,1 +1,0 @@
-#coufi je htranatý
