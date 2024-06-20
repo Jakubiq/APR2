@@ -275,25 +275,33 @@ class DataFrame:
         data = [line for line in self]
         new_df = []
         new_df2 = []
+        col_names = [name for name in self._columns]
         print(data)
 
         if axis == 0:
             label = [item-1 for item in labels]
 
+            print(label)
+
             for x in range(len(label)):
                 for i in range(len(data)):
-                    if i > label[x]:
-                        new_df = data[i]
+                    if i != label[x]:
+                        new_df += data[i]
+            print(new_df)
+            new_col = [[] for fiser_blb in new_df]
+            for i in range(len(new_df)):
+                for x in range(len(new_df)):
+                    new_col[i][x] = [new_df[i]]
+            print(new_col)
+            columns = {}
+            for x in range(len(col_names)):
+                for i in range(len(new_col)):
+                    columns[col_names[x]] = Column(new_col[i], Type.String)
 
-        # if axis == 0:
-        #     for i in range(len(label)):
-        #         if i < label[i]:
-        #             new_df.append(data[i])
-        # done_df = [item for item in data if item not in new_df]
+        elif axis == 1:
+            pass
 
-        col
-        for i in range(len(new_df)):
-            col
+        return DataFrame(columns)
         
 
 
@@ -335,7 +343,7 @@ class JSONReader(Reader):
         for cname in json.keys(): # cyklus přes sloupce (= atributy JSON objektu)
             dtype = Type.Float if all(value is None or isinstance(value, Real)
                                       for value in json[cname]) else Type.String
-            colum\ns[cname] = Column(json[cname], dtype)
+            columns[cname] = Column(json[cname], dtype)
         return DataFrame(columns)
 
 
@@ -365,7 +373,7 @@ if __name__ == "__main__":
     #print(df)
 
 print(f"Před {df}")
-df_dropped = df.drop([1, 2])
+df_dropped = df.drop([3])
 print(f"Po {df_dropped}")
 
 ###
